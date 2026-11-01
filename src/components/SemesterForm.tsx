@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { SemesterSettings } from '../types';
-import { addDays, isValidISODate, todayISO } from '../utils/dates';
+import { addDays, isValidISODate, startOfWeek, todayISO } from '../utils/dates';
 
 export function defaultSemester(): SemesterSettings {
-  const today = todayISO();
-  return { semesterName: '', startDate: today, endDate: addDays(today, 120), threshold: 0.8 };
+  // Start on this week's Monday so the current week's classes are already counted
+  const start = startOfWeek(todayISO());
+  return { semesterName: '', startDate: start, endDate: addDays(start, 120), threshold: 0.8 };
 }
 
 export function SemesterForm({
